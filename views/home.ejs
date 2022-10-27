@@ -1,0 +1,37 @@
+
+<%- include("partials/header"); -%>
+    <h1>Home</h1>
+    <p style="font-size: 22px;"> <%= startingContent %> </p>
+
+
+  <%  posts.forEach(function(post){ %>
+
+    <div style="border-bottom: 1px solid black;">
+        <h1><%=post.title%></h1>
+        <p>
+        <%=post.content.substring(0, 100) + " ..."%>
+        <a href="/posts/<%=post._id%>">Read More</a> <button class="del-btn" onclick="deletePost('<%= post.title %>')" ><i class="fa-sharp fa-solid fa-trash"></i></button>
+        </p>
+    </div>
+
+
+    <% }) %>
+
+
+<%- include("partials/footer"); -%>
+
+<script>
+    function deletePost(title){        
+        const xhr = new XMLHttpRequest();
+        
+        xhr.addEventListener("load", ()=>{
+            console.log("success")
+        });
+        xhr.addEventListener("error", ()=>{
+            alert("failed");
+        });
+        xhr.open('POST', "http://localhost:3000/delete");
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+        xhr.send(title);
+    }
+</script>
